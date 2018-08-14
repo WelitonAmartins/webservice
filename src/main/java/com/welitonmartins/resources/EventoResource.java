@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.welitonmartins.model.Evento;
 import com.welitonmartins.repository.EventoRepository;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(value="API REST Eventos")
 @RestController
 @RequestMapping("/evento")
 public class EventoResource {
@@ -21,17 +25,20 @@ public class EventoResource {
 	@Autowired
 	private EventoRepository er;
 	
+	@ApiOperation(value="Retorna uma lista de Eventos")
 	@GetMapping(produces="application/json")
 	public @ResponseBody Iterable<Evento> listaEventos() {
 		Iterable<Evento> listaEventos = er.findAll();
 		return listaEventos;
 	}
 	
+	@ApiOperation(value="salva um Eventos")
 	@PostMapping
 	public Evento cadastroEvento(@RequestBody @Valid Evento evento) {
 		return er.save(evento);
 	}
 	
+	@ApiOperation(value="deleta um evento Eventos")
 	@DeleteMapping
 	public Evento deletaEvento(@RequestBody Evento evento) {
 		er.delete(evento);
